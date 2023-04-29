@@ -8,4 +8,9 @@ class Repository {
     final todosRaw = await networkService.fetchTodos();
     return todosRaw?.map((e) => Todo.fromJson(e)).toList();
   }
+
+  Future<bool> changeCompletion(bool isCompleted, int id) async {
+    final patchObj = {"completed": isCompleted.toString()};
+    return await networkService.patchTodo(patchObj, id);
+  }
 }

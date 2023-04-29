@@ -50,7 +50,14 @@ class TodosScreen extends StatelessWidget {
 
   Widget _listTile(Todo todo, context) {
     return Dismissible(
-        key: Key("${todo.id}"), child: _makeTodoList(todo, context));
+      key: Key("${todo.id}"),
+      child: _makeTodoList(todo, context),
+      confirmDismiss: (_) async {
+        BlocProvider.of<TodosCubit>(context).chageCompletion(todo);
+        return false;
+      },
+      background: Container(color: Colors.indigo),
+    );
   }
 
   Widget _makeTodoList(Todo todo, context) {

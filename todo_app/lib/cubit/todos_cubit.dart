@@ -15,4 +15,20 @@ class TodosCubit extends Cubit<TodosState> {
       emit(TodosLoaded(todos: todos));
     });
   }
+
+  void chageCompletion(Todo todo) {
+    repository.changeCompletion(!todo.completed, todo.id).then((isChanged) {
+      if (isChanged) {
+        todo.completed = !todo.completed;
+        updateTodoList();
+      }
+    });
+  }
+
+  void updateTodoList() {
+    final currentState = state;
+    if (currentState is TodosLoaded) {
+      emit(TodosLoaded(todos: currentState.todos));
+    }
+  }
 }
